@@ -1,6 +1,6 @@
 Name:           perl-Net-SSH2
 Version:        0.18
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -62,6 +62,9 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*
 
 %changelog
+* Sun Dec 02 2007 Chris Weyl <cweyl@alumni.drew.edu> 0.18-2
+- bump
+
 * Tue Nov 13 2007 Chris Weyl <cweyl@alumni.drew.edu> 0.18-1
 - update to 0.18
 - drop old patches
