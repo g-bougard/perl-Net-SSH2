@@ -1,6 +1,6 @@
 Name:           perl-Net-SSH2
 Version:        0.18
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -62,6 +62,9 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*
 
 %changelog
+* Mon Feb 18 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 0.18-3
+- Autorebuild for GCC 4.3
+
 * Sun Dec 02 2007 Chris Weyl <cweyl@alumni.drew.edu> 0.18-2
 - bump
 
