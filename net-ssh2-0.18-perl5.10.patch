@@ -1,0 +1,55 @@
+diff -ruN Net-SSH-0.18.orig/SSH2.xs Net-SSH-0.18/SSH2.xs
+--- Net-SSH-0.18.orig/SSH2.xs	2007-11-10 17:53:25.000000000 -0800
++++ Net-SSH-0.18/SSH2.xs	2008-06-10 03:38:52.000000000 -0700
+@@ -1006,7 +1006,7 @@
+                 debug("- [%d] = channel\n", i);
+                 pollfd[i].type = LIBSSH2_POLLFD_CHANNEL;
+                 pollfd[i].fd.channel =
+-                 ((SSH2_CHANNEL*)SvIVX(SvRV(*handle)))->channel;
++                 ((SSH2_CHANNEL*)SvIVX(GvSV((GV*)SvRV(*handle))))->channel;
+             } else if(strEQ(package, "Net::SSH2::Listener")) {
+                 debug("- [%d] = listener\n", i);
+                 pollfd[i].type = LIBSSH2_POLLFD_LISTENER;
+diff -ruN Net-SSH-0.18.orig/typemap Net-SSH-0.18/typemap
+--- Net-SSH-0.18.orig/typemap	2007-02-24 07:15:23.000000000 -0800
++++ Net-SSH-0.18/typemap	2008-06-10 01:42:42.000000000 -0700
+@@ -29,9 +29,9 @@
+     const char* name = form("_GEN_%ld", (long)net_ch_gensym++);
+     SvUPGRADE((SV*)gv, SVt_PVGV);
+     SvUPGRADE((SV*)io, SVt_PVIO);
+-    SvIVX(gv) = PTR2IV($var);
+     gv_init(gv, gv_stashpv("Net::SSH2::Channel", 0/*create*/),
+      name, strlen(name), 0/*multi*/);
++    GvSV(gv) = newSViv(PTR2IV($var));
+     GvIOp(gv) = io;
+     sv_magic((SV*)io, newRV((SV*)gv), PERL_MAGIC_tiedscalar, Nullch, 0);
+     }
+@@ -49,9 +49,9 @@
+     const char* name = form("_GEN_%ld", (long)net_fi_gensym++);
+     SvUPGRADE((SV*)gv, SVt_PVGV);
+     SvUPGRADE((SV*)io, SVt_PVIO);
+-    SvIVX(gv) = PTR2IV($var);
+     gv_init(gv, gv_stashpv("Net::SSH2::File", 0/*create*/),
+      name, strlen(name), 0/*multi*/);
++    GvSV(gv) = newSViv(PTR2IV($var));
+     GvIOp(gv) = io;
+     sv_magic((SV*)io, newRV((SV*)gv), PERL_MAGIC_tiedscalar, Nullch, 0);
+     }
+@@ -80,7 +80,7 @@
+ 
+ O_CHANNEL
+     if(sv_isobject($arg) && (SvTYPE(SvRV($arg)) == SVt_PVGV))
+-        $var = ($type)SvIVX((SV*)SvRV($arg));
++        $var = ($type)SvIVX(GvSV((GV*)SvRV($arg)));
+     else
+         croak(\"${Package}::$func_name() - invalid channel object\");
+ 
+@@ -98,7 +98,7 @@
+ 
+ O_FILE
+     if(sv_isobject($arg) && (SvTYPE(SvRV($arg)) == SVt_PVGV))
+-        $var = ($type)SvIVX((SV*)SvRV($arg));
++        $var = ($type)SvIVX(GvSV((GV*)SvRV($arg)));
+     else
+         croak(\"${Package}::$func_name() - invalid SFTP file object\");
+ 

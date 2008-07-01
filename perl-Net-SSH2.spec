@@ -1,11 +1,14 @@
 Name:           perl-Net-SSH2
 Version:        0.18
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Net-SSH2/
 Source0:        http://www.cpan.org/authors/id/D/DB/DBROBINS/Net-SSH2-%{version}.tar.gz
+
+# http://rt.cpan.org/Public/Bug/Display.html?id=36614
+Patch0:         net-ssh2-0.18-perl5.10.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
@@ -28,6 +31,8 @@ all of the key exchanges, ciphers, and compression of libssh2.
 
 %prep
 %setup -q -n Net-SSH2-%{version}
+
+%patch0 -p1
 
 perl -pi -e 's|^#!perl|#!/usr/bin/perl|' example/*
 
@@ -62,6 +67,9 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*
 
 %changelog
+* Mon Jun 30 2008 Chris Weyl <cweyl@alumni.drew.edu> 0.18-5
+- apply patch for 5.10
+
 * Thu Mar 06 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 0.18-4
 Rebuild for new perl
 
