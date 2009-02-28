@@ -1,6 +1,6 @@
 Name:           perl-Net-SSH2
 Version:        0.18
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -23,6 +23,11 @@ BuildRequires:  perl(Test::More)
 #BuildRequires: perl(IO::File) 
 #BuildRequires: perl(Socket) 
 
+
+# don't "provide" private Perl libs
+%global _use_internal_dependency_generator 0
+%global provfind /bin/sh -c "grep -v '%perl_vendorarch.*\\.so$' | %__find_provides"
+%global __find_provides %provfind
 
 %description
 Net::SSH2 is a perl interface to the libssh2 (http://www.libssh2.org)
@@ -67,6 +72,9 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*
 
 %changelog
+* Sat Feb 28 2009 Chris Weyl <cweyl@alumni.drew.edu> - 0.18-7
+- Stripping bad provides of private Perl extension libs
+
 * Thu Feb 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.18-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
 
