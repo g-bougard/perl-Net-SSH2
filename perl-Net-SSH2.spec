@@ -1,14 +1,14 @@
 Name:           perl-Net-SSH2
-Version:        0.18
-Release:        7%{?dist}
+Version:        0.21
+Release:        1%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Net-SSH2/
-Source0:        http://www.cpan.org/authors/id/D/DB/DBROBINS/Net-SSH2-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/R/RK/RKITOVER/Net-SSH2-%{version}.tar.gz
 
 # http://rt.cpan.org/Public/Bug/Display.html?id=36614
-Patch0:         net-ssh2-0.18-perl5.10.patch
+#Patch0:         net-ssh2-0.18-perl5.10.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
@@ -17,17 +17,19 @@ Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $versi
 BuildRequires:  libssh2-devel >= 0.18
 
 # core
-BuildRequires:  perl(ExtUtils::MakeMaker)
+BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.42
 BuildRequires:  perl(Test::More)
-#BuildRequires: perl(File::Basename) 
-#BuildRequires: perl(IO::File) 
-#BuildRequires: perl(Socket) 
+#BuildRequires: perl(File::Basename)
+#BuildRequires: perl(IO::File)
+#BuildRequires: perl(Socket)
 
 
 # don't "provide" private Perl libs
 %global _use_internal_dependency_generator 0
-%global provfind /bin/sh -c "grep -v '%perl_vendorarch.*\\.so$' | %__find_provides"
-%global __find_provides %provfind
+%global __deploop() while read FILE; do /usr/lib/rpm/rpmdeps -%{1} ${FILE}; done | /bin/sort -u
+%global __find_provides /bin/sh -c "%{__grep} -v '%_docdir' | %{__grep} -v '%{perl_vendorarch}/.*\\.so$' | %{__deploop P}"
+%global __find_requires /bin/sh -c "%{__grep} -v '%_docdir' | %{__deploop R}"
+
 
 %description
 Net::SSH2 is a perl interface to the libssh2 (http://www.libssh2.org)
@@ -37,9 +39,9 @@ all of the key exchanges, ciphers, and compression of libssh2.
 %prep
 %setup -q -n Net-SSH2-%{version}
 
-%patch0 -p1
+#patch0 -p1
 
-perl -pi -e 's|^#!perl|#!/usr/bin/perl|' example/*
+perl -pi -e 's|^#!perl|#!%{__perl}|' example/*
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
@@ -72,6 +74,10 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*
 
 %changelog
+* Mon Jun 08 2009 Chris Weyl <cweyl@alumni.drew.edu> 0.21-1
+- auto-update to 0.21 (by cpan-spec-update 0.01)
+- altered br on perl(ExtUtils::MakeMaker) (0 => 6.42)
+
 * Sat Feb 28 2009 Chris Weyl <cweyl@alumni.drew.edu> - 0.18-7
 - Stripping bad provides of private Perl extension libs
 

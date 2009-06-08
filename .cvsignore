@@ -1,9 +1,1 @@
-Net-SSH2-0.18.tar.gz
-Net-SSH2-*
-*.gz
-*.rpm
-*.tar
-x86_64
-i386
-clog
-.build*
+Net-SSH2-0.21.tar.gz
