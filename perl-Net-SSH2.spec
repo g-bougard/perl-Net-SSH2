@@ -1,6 +1,6 @@
 Name:           perl-Net-SSH2
 Version:        0.21
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -74,6 +74,9 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*
 
 %changelog
+* Sun Jul 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.21-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
+
 * Mon Jun 08 2009 Chris Weyl <cweyl@alumni.drew.edu> 0.21-1
 - auto-update to 0.21 (by cpan-spec-update 0.01)
 - altered br on perl(ExtUtils::MakeMaker) (0 => 6.42)
