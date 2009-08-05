@@ -1,6 +1,6 @@
 Name:           perl-Net-SSH2
 Version:        0.21
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -14,6 +14,8 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 # non-perl
+BuildRequires:  zlib-devel
+BuildRequires:  openssl-devel
 BuildRequires:  libssh2-devel >= 0.18
 
 # core
@@ -74,6 +76,9 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*
 
 %changelog
+* Wed Aug 05 2009 Ralf Corsépius <corsepiu@fedoraproject.org> - 0.21-3
+- Fix mass rebuild breakdown: Add BR: zlib-devel, openssl-devel.
+
 * Sun Jul 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.21-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 
