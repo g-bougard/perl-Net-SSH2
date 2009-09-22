@@ -1,6 +1,6 @@
 Name:           perl-Net-SSH2
-Version:        0.21
-Release:        5%{?dist}
+Version:        0.27
+Release:        1%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -25,13 +25,8 @@ BuildRequires:  perl(Test::More)
 #BuildRequires: perl(IO::File)
 #BuildRequires: perl(Socket)
 
-
 # don't "provide" private Perl libs
-%global _use_internal_dependency_generator 0
-%global __deploop() while read FILE; do /usr/lib/rpm/rpmdeps -%{1} ${FILE}; done | /bin/sort -u
-%global __find_provides /bin/sh -c "%{__grep} -v '%_docdir' | %{__grep} -v '%{perl_vendorarch}/.*\\.so$' | %{__deploop P}"
-%global __find_requires /bin/sh -c "%{__grep} -v '%_docdir' | %{__deploop R}"
-
+%{?perl_default_filter}
 
 %description
 Net::SSH2 is a perl interface to the libssh2 (http://www.libssh2.org)
@@ -71,11 +66,15 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root,-)
 %doc Changes README example/ t/
-%{perl_vendorarch}/auto/*
-%{perl_vendorarch}/Net*
+%{perl_vendorarch}/*
+%exclude %dir %{perl_vendorarch}/auto
 %{_mandir}/man3/*
 
 %changelog
+* Tue Sep 22 2009 Chris Weyl <cweyl@alumni.drew.edu> 0.27-1
+- alter filtering
+- auto-update to 0.27 (by cpan-spec-update 0.01)
+
 * Mon Sep 21 2009 Chris Weyl <cweyl@alumni.drew.edu> - 0.21-5
 - rebuild for libssh2 1.2
 
