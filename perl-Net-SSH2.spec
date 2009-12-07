@@ -1,6 +1,6 @@
 Name:           perl-Net-SSH2
 Version:        0.27
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -71,6 +71,9 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*
 
 %changelog
+* Mon Dec  7 2009 Stepan Kasal <skasal@redhat.com> - 0.27-2
+- rebuild against perl 5.10.1
+
 * Tue Sep 22 2009 Chris Weyl <cweyl@alumni.drew.edu> 0.27-1
 - alter filtering
 - auto-update to 0.27 (by cpan-spec-update 0.01)
