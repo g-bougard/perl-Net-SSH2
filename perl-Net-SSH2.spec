@@ -1,6 +1,7 @@
+%define _default_patch_fuzz 2 \n\n
 Name:           perl-Net-SSH2
 Version:        0.27
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -71,6 +72,10 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*
 
 %changelog
+* Thu Jan 14 2010 Chris Weyl <cweyl@alumni.drew.edu> 0.27-3
+- bump for libssh2 rebuild
+
+
 * Mon Dec  7 2009 Stepan Kasal <skasal@redhat.com> - 0.27-2
 - rebuild against perl 5.10.1
 
