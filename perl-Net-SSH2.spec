@@ -1,6 +1,6 @@
 Name:           perl-Net-SSH2
 Version:        0.28
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -24,6 +24,7 @@ BuildRequires:  perl(Test::More)
 
 # don't "provide" private Perl libs
 %{?perl_default_filter}
+%{?perl_default_subpackage_tests}
 
 %description
 Net::SSH2 is a perl interface to the libssh2 (http://www.libssh2.org)
@@ -42,7 +43,7 @@ make %{?_smp_mflags}
 %install
 rm -rf %{buildroot}
 
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install DESTDIR=%{buildroot}
 
 find %{buildroot} -type f -name .packlist -exec rm -f {} +
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} +
@@ -60,12 +61,15 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-%doc Changes README example/ t/
+%doc Changes README example/
 %{perl_vendorarch}/*
 %exclude %dir %{perl_vendorarch}/auto
 %{_mandir}/man3/*
 
 %changelog
+* Fri Mar 12 2010 Chris Weyl <cweyl@alumni.drew.edu> 0.28-2
+- spec file touch-up
+
 * Wed Jan 20 2010 Chris Weyl <cweyl@alumni.drew.edu> 0.28-1
 - auto-update to 0.28 (by cpan-spec-update 0.01)
 
