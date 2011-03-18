@@ -1,13 +1,12 @@
 Name:           perl-Net-SSH2
-Version:        0.28
-Release:        5%{?dist}
+Version:        0.33
+Release:        1%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Net-SSH2/
 Source0:        http://search.cpan.org/CPAN/authors/id/R/RK/RKITOVER/Net-SSH2-%{version}.tar.gz
 
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 # non-perl
@@ -41,8 +40,6 @@ perl -pi -e 's|^#!perl|#!%{__perl}|' example/*
 make %{?_smp_mflags}
 
 %install
-rm -rf %{buildroot}
-
 make pure_install DESTDIR=%{buildroot}
 
 find %{buildroot} -type f -name .packlist -exec rm -f {} +
@@ -56,9 +53,6 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 # buildsys anyways as they require network access
 make test
 
-%clean
-rm -rf %{buildroot}
-
 %files
 %defattr(-,root,root,-)
 %doc Changes README example/
@@ -67,6 +61,10 @@ rm -rf %{buildroot}
 %{_mandir}/man3/*
 
 %changelog
+* Fri Mar 18 2011 Iain Arnell <iarnell@gmail.com> 0.33-1
+- update to latest upstream version
+- clean up spec for modern rpmbuild
+
 * Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.28-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
