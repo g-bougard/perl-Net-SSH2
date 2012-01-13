@@ -1,27 +1,23 @@
 Name:           perl-Net-SSH2
-Version:        0.33
-Release:        3%{?dist}
+Version:        0.40
+Release:        1%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Net-SSH2/
 Source0:        http://search.cpan.org/CPAN/authors/id/R/RK/RKITOVER/Net-SSH2-%{version}.tar.gz
-
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
-
+BuildRequires:  perl(Carp)
+BuildRequires:  perl(Exporter)
+BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.42
+BuildRequires:  perl(IO::File)
+BuildRequires:  perl(Socket)
+BuildRequires:  perl(Test::More)
 # non-perl
 BuildRequires:  zlib-devel
 BuildRequires:  openssl-devel
 BuildRequires:  libssh2-devel >= 0.18
 
-# core
-BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.42
-BuildRequires:  perl(Test::More)
-#BuildRequires: perl(File::Basename)
-#BuildRequires: perl(IO::File)
-#BuildRequires: perl(Socket)
-
-# don't "provide" private Perl libs
 %{?perl_default_filter}
 %{?perl_default_subpackage_tests}
 
@@ -32,20 +28,17 @@ all of the key exchanges, ciphers, and compression of libssh2.
 
 %prep
 %setup -q -n Net-SSH2-%{version}
-
 perl -pi -e 's|^#!perl|#!%{__perl}|' example/*
 
 %build
-%{__perl} Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
 make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-
 find %{buildroot} -type f -name .packlist -exec rm -f {} +
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} +
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
-
 %{_fixperms} %{buildroot}/*
 
 %check
@@ -54,13 +47,16 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 make test
 
 %files
-%defattr(-,root,root,-)
-%doc Changes README example/
+%doc Changes README TODO example/
 %{perl_vendorarch}/*
 %exclude %dir %{perl_vendorarch}/auto
 %{_mandir}/man3/*
 
 %changelog
+* Fri Jan 13 2012 Petr Šabata <contyk@redhat.com> - 0.40-1
+- 0.40 bump
+- Spec cleanup
+
 * Fri Jun 17 2011 Marcela Mašláňová <mmaslano@redhat.com> - 0.33-3
 - Perl mass rebuild
 
