@@ -6,6 +6,8 @@ License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Net-SSH2/
 Source0:        http://search.cpan.org/CPAN/authors/id/R/RK/RKITOVER/Net-SSH2-%{version}.tar.gz
+# Avoid the EE::MM CCFLAGS bug
+Patch0:         Net-SSH2-0.41-Makefile.patch
 Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 BuildRequires:  perl(Carp)
 BuildRequires:  perl(Exporter)
@@ -28,6 +30,7 @@ all of the key exchanges, ciphers, and compression of libssh2.
 
 %prep
 %setup -q -n Net-SSH2-%{version}
+%patch0 -p1 -b .makefile
 perl -pi -e 's|^#!perl|#!%{__perl}|' example/*
 
 %build
