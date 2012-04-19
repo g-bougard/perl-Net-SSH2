@@ -1,0 +1,15 @@
+diff --git a/Makefile.PL b/Makefile.PL
+index 8969253..af2d345 100644
+--- a/Makefile.PL
++++ b/Makefile.PL
+@@ -67,8 +67,8 @@ if (!$lib && !$inc) {
+ auto_provides;
+ 
+ libs $lib;
+-$inc = "$inc -I.";
+-makemaker_args CCFLAGS => $inc, @define;
++inc "$inc -I.";
++makemaker_args @define;
+ 
+ realclean_files qw/const-c.inc const-xs.inc/;
+ 
