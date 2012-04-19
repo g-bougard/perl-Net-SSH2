@@ -1,12 +1,12 @@
 Name:           perl-Net-SSH2
-Version:        0.40
+Version:        0.41
 Release:        1%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Net-SSH2/
 Source0:        http://search.cpan.org/CPAN/authors/id/R/RK/RKITOVER/Net-SSH2-%{version}.tar.gz
-Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
+Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 BuildRequires:  perl(Carp)
 BuildRequires:  perl(Exporter)
 BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.42
@@ -53,6 +53,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Thu Apr 19 2012 Petr Šabata <contyk@redhat.com> - 0.41-1
+- 0.41 bump
+
 * Fri Jan 13 2012 Petr Šabata <contyk@redhat.com> - 0.40-1
 - 0.40 bump
 - Spec cleanup
