@@ -1,6 +1,6 @@
 Name:           perl-Net-SSH2
-Version:        0.45
-Release:        3%{?dist}
+Version:        0.46
+Release:        1%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -8,12 +8,27 @@ URL:            http://search.cpan.org/dist/Net-SSH2/
 Source0:        http://search.cpan.org/CPAN/authors/id/R/RK/RKITOVER/Net-SSH2-%{version}.tar.gz
 # Avoid the EE::MM CCFLAGS bug
 Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
+BuildRequires:  perl(AutoLoader)
+BuildRequires:  perl(base)
 BuildRequires:  perl(Carp)
+BuildRequires:  perl(Cwd)
+BuildRequires:  perl(Devel::CheckLib)
 BuildRequires:  perl(Exporter)
+BuildRequires:  perl(ExtUtils::Constant)
 BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.42
+BuildRequires:  perl(ExtUtils::Manifest)
+BuildRequires:  perl(File::Spec)
+BuildRequires:  perl(File::Temp)
 BuildRequires:  perl(IO::File)
+BuildRequires:  perl(IO::Scalar)
+BuildRequires:  perl(IO::Socket::INET)
+BuildRequires:  perl(Module::Install)
+BuildRequires:  perl(Module::Install::Base)
 BuildRequires:  perl(Socket)
+BuildRequires:  perl(Term::ReadKey)
 BuildRequires:  perl(Test::More)
+BuildRequires:  perl(Text::ParseWords)
+BuildRequires:  perl(XSLoader)
 # non-perl
 BuildRequires:  zlib-devel
 BuildRequires:  openssl-devel
@@ -39,7 +54,6 @@ make %{?_smp_mflags}
 make pure_install DESTDIR=%{buildroot}
 find %{buildroot} -type f -name .packlist -exec rm -f {} +
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} +
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{_fixperms} %{buildroot}/*
 
 %check
@@ -54,6 +68,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Tue Nov 13 2012 Petr Šabata <contyk@redhat.com> - 0.46-1
+- 0.46 bump
+
 * Fri Jul 20 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.45-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
