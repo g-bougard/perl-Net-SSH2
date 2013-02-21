@@ -1,5 +1,5 @@
 Name:           perl-Net-SSH2
-Version:        0.47
+Version:        0.48
 Release:        1%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
@@ -79,6 +79,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Thu Feb 21 2013 Petr Šabata <contyk@redhat.com> - 0.48-1
+- 0.48 bump
+
 * Tue Feb 12 2013 Petr Šabata <contyk@redhat.com> - 0.47-1
 - 0.47 bump
 - Patch the version check (#864102, rt#80065)
