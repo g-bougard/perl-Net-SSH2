@@ -1,6 +1,6 @@
 Name:           perl-Net-SSH2
-Version:        0.50
-Release:        2%{?dist}
+Version:        0.52
+Release:        1%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -9,7 +9,8 @@ Source0:        http://search.cpan.org/CPAN/authors/id/R/RK/RKITOVER/Net-SSH2-%{
 # rt#80065, rhbz#864102
 Patch0:         Net-SSH2-0.47-op-priority.patch
 # Avoid the EE::MM CCFLAGS bug
-Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
+Requires:       perl(:MODULE_COMPAT_%(eval "$(perl -V:version)"; echo $version))
+BuildRequires:  perl
 BuildRequires:  perl(AutoLoader)
 BuildRequires:  perl(base)
 BuildRequires:  perl(Carp)
@@ -79,6 +80,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Mon Aug 26 2013 Petr Šabata <contyk@redhat.com> - 0.52-1
+- 0.52 bump
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.50-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
