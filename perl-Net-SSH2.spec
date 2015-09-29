@@ -1,51 +1,54 @@
 Name:           perl-Net-SSH2
-Version:        0.53
-Release:        6%{?dist}
+Version:        0.55
+Release:        1%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Net-SSH2/
-Source0:        http://search.cpan.org/CPAN/authors/id/R/RK/RKITOVER/Net-SSH2-%{version}.tar.gz
-# rt#80065, rhbz#864102
-Patch0:         Net-SSH2-0.47-op-priority.patch
-# Avoid the EE::MM CCFLAGS bug
-Requires:       perl(:MODULE_COMPAT_%(eval "$(perl -V:version)"; echo $version))
+Source0:        http://search.cpan.org/CPAN/authors/id/S/SA/SALVA/Net-SSH2-%{version}.tar.gz
+# Build
+BuildRequires:  findutils
+BuildRequires:  libgcrypt-devel
+BuildRequires:  libssh2-devel >= 0.18
+BuildRequires:  make
+BuildRequires:  openssl-devel
 BuildRequires:  perl
-BuildRequires:  perl(AutoLoader)
 BuildRequires:  perl(base)
-BuildRequires:  perl(Carp)
 BuildRequires:  perl(Config)
 BuildRequires:  perl(Cwd)
-BuildRequires:  perl(Exporter)
-BuildRequires:  perl(ExtUtils::CBuilder)
 BuildRequires:  perl(ExtUtils::Constant)
-BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.42
-BuildRequires:  perl(ExtUtils::Manifest)
+BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.76
 BuildRequires:  perl(ExtUtils::MM_Unix)
 BuildRequires:  perl(Fcntl)
-BuildRequires:  perl(File::Basename)
+BuildRequires:  perl(File::Copy)
 BuildRequires:  perl(File::Find)
-BuildRequires:  perl(File::Slurp)
+BuildRequires:  perl(File::Path)
 BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(File::Temp)
-BuildRequires:  perl(FindBin)
-BuildRequires:  perl(IO::File)
-BuildRequires:  perl(IO::Scalar)
-BuildRequires:  perl(IO::Socket::INET)
-BuildRequires:  perl(Socket)
 BuildRequires:  perl(strict)
-BuildRequires:  perl(Test::More)
 BuildRequires:  perl(Text::ParseWords)
 BuildRequires:  perl(vars)
 BuildRequires:  perl(warnings)
-BuildRequires:  perl(XSLoader)
-# non-perl
 BuildRequires:  zlib-devel
-BuildRequires:  openssl-devel
-BuildRequires:  libssh2-devel >= 0.18
-# Drop the tests subpackage; remove during f21 development cycle
-Obsoletes:      %{name}-tests%{?_isa} < 0.47-1
-Provides:       %{name}-tests%{?_isa} = %{version}-%{release}
+# Runtime
+BuildRequires:  perl(AutoLoader)
+BuildRequires:  perl(Carp)
+BuildRequires:  perl(File::Basename)
+BuildRequires:  perl(IO::File)
+# IO::Socket::IP is preferred
+# XXX: BuildRequires:  perl(IO::Socket::INET)
+BuildRequires:  perl(IO::Socket::IP)
+BuildRequires:  perl(Socket)
+BuildRequires:  perl(Term::ReadKey)
+BuildRequires:  perl(XSLoader)
+# Tests only
+BuildRequires:  perl(Test::More)
+# Optional tests only
+BuildRequires:  perl(File::Slurp)
+BuildRequires:  perl(IO::Scalar)
+Requires:       perl(:MODULE_COMPAT_%(eval "$(perl -V:version)"; echo $version))
+Requires:       perl(IO::Socket::IP)
+Recommends:     perl(Term::ReadKey)
 
 %{?perl_default_filter}
 
@@ -57,16 +60,14 @@ all of the key exchanges, ciphers, and compression of libssh2.
 %prep
 %setup -q -n Net-SSH2-%{version}
 perl -pi -e 's|^#!perl|#!%{__perl}|' example/*
-%patch0 -p1 -b .op-priority
 
 %build
-perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} +
-find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} +
+find %{buildroot} -type f -name '*.bs' -size 0 -delete
 %{_fixperms} %{buildroot}/*
 
 %check
@@ -75,11 +76,16 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} +
 make test
 
 %files
-%doc Changes README TODO example/
-%{perl_vendorarch}/*
+%doc Changes README TODO example
+%{perl_vendorarch}/auto/*
+%{perl_vendorarch}/Net*
 %{_mandir}/man3/*
 
 %changelog
+* Tue Sep 29 2015 Petr Šabata <contyk@redhat.com> - 0.55-1
+- 0.55 bump
+- Source URL updated
+
 * Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.53-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
