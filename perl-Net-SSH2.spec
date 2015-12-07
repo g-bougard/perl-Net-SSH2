@@ -1,11 +1,13 @@
 Name:           perl-Net-SSH2
 Version:        0.56
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Net-SSH2/
 Source0:        http://search.cpan.org/CPAN/authors/id/S/SA/SALVA/Net-SSH2-%{version}.tar.gz
+# gh@28, rhbz#1288774
+Patch0:         Net-SSH2-auth_agent-workaround-bug-on-libssh2_agent_disconnec.patch
 # Build
 BuildRequires:  findutils
 BuildRequires:  libgcrypt-devel
@@ -60,6 +62,7 @@ all of the key exchanges, ciphers, and compression of libssh2.
 %prep
 %setup -q -n Net-SSH2-%{version}
 perl -pi -e 's|^#!perl|#!%{__perl}|' example/*
+%patch0 -p1
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
@@ -82,6 +85,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Mon Dec 07 2015 Petr Šabata <contyk@redhat.com> - 0.56-2
+- Work around a libssh2 agent bug (#1288774)
+
 * Mon Oct 12 2015 Jitka Plesnikova <jplesnik@redhat.com> - 0.56-1
 - 0.56 bump
 

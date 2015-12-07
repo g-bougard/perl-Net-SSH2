@@ -1,0 +1,35 @@
+From 54ae30a67b59cc6d411b7026897e58300a4b030d Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Salvador=20Fandi=C3=B1o?= <sfandino@yahoo.com>
+Date: Sat, 5 Dec 2015 21:35:27 +0100
+Subject: [PATCH 1/6] auth_agent: workaround bug on libssh2_agent_disconnect
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+libssh2_agent_disconnect was being called twice, once directly and
+other under the hood by libssh2_agent_free. Unfortunatelly, due to a
+bug (reported!) on libssh2, that resulted in trying to close an
+already closed file descriptor.
+
+This patch removes the useless explicit call.
+
+Signed-off-by: Petr Šabata <contyk@redhat.com>
+---
+ SSH2.xs | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/SSH2.xs b/SSH2.xs
+index 2fc0ea2..28dab4a 100644
+--- a/SSH2.xs
++++ b/SSH2.xs
+@@ -1212,7 +1212,6 @@ CODE:
+                     }
+                 }
+             }
+-            libssh2_agent_disconnect(agent);
+         }
+         libssh2_agent_free(agent);
+     }
+-- 
+2.5.0
+
