@@ -1,6 +1,6 @@
 Name:           perl-Net-SSH2
-Version:        0.58
-Release:        3%{?dist}
+Version:        0.60
+Release:        1%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -13,39 +13,38 @@ BuildRequires:  libssh2-devel >= 0.18
 BuildRequires:  make
 BuildRequires:  openssl-devel
 BuildRequires:  perl
-BuildRequires:  perl(base)
+BuildRequires:  perl-devel
 BuildRequires:  perl(Config)
 BuildRequires:  perl(Cwd)
-BuildRequires:  perl(ExtUtils::Constant)
-BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.76
-BuildRequires:  perl(ExtUtils::MM_Unix)
-BuildRequires:  perl(Fcntl)
-BuildRequires:  perl(File::Copy)
-BuildRequires:  perl(File::Find)
-BuildRequires:  perl(File::Path)
-BuildRequires:  perl(File::Spec)
-BuildRequires:  perl(File::Temp)
+BuildRequires:  perl(File::Glob)
+BuildRequires:  perl(inc::Module::Install) >= 0.91
+BuildRequires:  perl(Module::Install::CheckLib)
+BuildRequires:  perl(Module::Install::Makefile)
+BuildRequires:  perl(Module::Install::Metadata)
+BuildRequires:  perl(Module::Install::WriteAll)
 BuildRequires:  perl(strict)
-BuildRequires:  perl(Text::ParseWords)
-BuildRequires:  perl(vars)
 BuildRequires:  perl(warnings)
 BuildRequires:  zlib-devel
 # Runtime
-BuildRequires:  perl(AutoLoader)
+BuildRequires:  perl(base)
 BuildRequires:  perl(Carp)
 BuildRequires:  perl(Errno)
+BuildRequires:  perl(Exporter)
 BuildRequires:  perl(File::Basename)
+BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(IO::File)
 # IO::Socket::IP is preferred
 # XXX: BuildRequires:  perl(IO::Socket::INET)
 BuildRequires:  perl(IO::Socket::IP)
 BuildRequires:  perl(Socket)
 BuildRequires:  perl(Term::ReadKey)
+BuildRequires:  perl(warnings::register)
 BuildRequires:  perl(XSLoader)
 # Tests only
+BuildRequires:  perl(Fcntl)
+BuildRequires:  perl(Getopt::Long)
 BuildRequires:  perl(Test::More)
 # Optional tests only
-BuildRequires:  perl(File::Slurp)
 BuildRequires:  perl(IO::Scalar)
 Requires:       perl(:MODULE_COMPAT_%(eval "$(perl -V:version)"; echo $version))
 Requires:       perl(IO::Socket::IP)
@@ -61,12 +60,17 @@ all of the key exchanges, ciphers, and compression of libssh2.
 %prep
 %setup -q -n Net-SSH2-%{version}
 
+# Remove bundled libraries
+rm -r inc
+sed -i -e '/^inc\// d' MANIFEST
+
 %build
-perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
 make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
+find %{buildroot} -type f -name .packlist -delete
 find %{buildroot} -type f -name '*.bs' -size 0 -delete
 %{_fixperms} %{buildroot}/*
 
@@ -76,12 +80,15 @@ find %{buildroot} -type f -name '*.bs' -size 0 -delete
 make test
 
 %files
-%doc Changes README TODO example
+%doc Changes README example
 %{perl_vendorarch}/auto/*
 %{perl_vendorarch}/Net*
 %{_mandir}/man3/*
 
 %changelog
+* Mon May 23 2016 Jitka Plesnikova <jplesnik@redhat.com> - 0.60-1
+- 0.60 bump
+
 * Sun May 15 2016 Jitka Plesnikova <jplesnik@redhat.com> - 0.58-3
 - Perl 5.24 rebuild
 
