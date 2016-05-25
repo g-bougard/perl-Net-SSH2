@@ -1,6 +1,6 @@
 Name:           perl-Net-SSH2
 Version:        0.60
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -49,6 +49,7 @@ BuildRequires:  perl(IO::Scalar)
 Requires:       perl(:MODULE_COMPAT_%(eval "$(perl -V:version)"; echo $version))
 Requires:       perl(IO::Socket::IP)
 Recommends:     perl(Term::ReadKey)
+Provides:       perl(Net::SSH2::Constants) = %{version}
 
 %{?perl_default_filter}
 
@@ -86,6 +87,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Wed May 25 2016 Petr Pisar <ppisar@redhat.com> - 0.60-2
+- Provide hidden Net::SSH2::Constants module (bug #1339341)
+
 * Mon May 23 2016 Jitka Plesnikova <jplesnik@redhat.com> - 0.60-1
 - 0.60 bump
 
