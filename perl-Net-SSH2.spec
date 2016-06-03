@@ -1,6 +1,6 @@
 Name:           perl-Net-SSH2
-Version:        0.60
-Release:        2%{?dist}
+Version:        0.61
+Release:        1%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -87,6 +87,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Fri Jun 03 2016 Jitka Plesnikova <jplesnik@redhat.com> - 0.61-1
+- 0.61 bump
+
 * Wed May 25 2016 Petr Pisar <ppisar@redhat.com> - 0.60-2
 - Provide hidden Net::SSH2::Constants module (bug #1339341)
 
