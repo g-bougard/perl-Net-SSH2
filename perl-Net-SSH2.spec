@@ -13,7 +13,7 @@ BuildRequires:  libgcrypt-devel
 BuildRequires:  libssh2-devel >= 0.18
 BuildRequires:  make
 BuildRequires:  openssl-devel
-BuildRequires:  perl
+BuildRequires:  perl-interpreter
 BuildRequires:  perl-devel
 BuildRequires:  perl-generators
 BuildRequires:  perl(Config)
