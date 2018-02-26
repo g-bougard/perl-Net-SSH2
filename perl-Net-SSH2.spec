@@ -1,6 +1,6 @@
 Name:           perl-Net-SSH2
-Version:        0.68
-Release:        2%{?dist}
+Version:        0.69
+Release:        1%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -19,8 +19,7 @@ BuildRequires:  perl-generators
 BuildRequires:  perl(Config)
 BuildRequires:  perl(Cwd)
 BuildRequires:  perl(File::Glob)
-BuildRequires:  perl(inc::Module::Install) >= 0.91
-BuildRequires:  perl(lib)
+BuildRequires:  perl(inc::Module::Install) >= 1.17
 BuildRequires:  perl(Module::Install::CheckLib)
 BuildRequires:  perl(Module::Install::Makefile)
 BuildRequires:  perl(Module::Install::Metadata)
@@ -91,6 +90,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Mon Feb 26 2018 Jitka Plesnikova <jplesnik@redhat.com> - 0.69-1
+- 0.69 bump
+
 * Thu Feb 08 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.68-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
