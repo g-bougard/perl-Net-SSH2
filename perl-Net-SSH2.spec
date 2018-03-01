@@ -1,6 +1,6 @@
 Name:           perl-Net-SSH2
 Version:        0.69
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -90,6 +90,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Thu Mar  1 2018 Florian Weimer <fweimer@redhat.com> - 0.69-2
+- Rebuild with new redhat-rpm-config/perl build flags
+
 * Mon Feb 26 2018 Jitka Plesnikova <jplesnik@redhat.com> - 0.69-1
 - 0.69 bump
 
