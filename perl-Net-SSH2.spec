@@ -4,8 +4,8 @@ Release:        2%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 Group:          Development/Libraries
-URL:            http://search.cpan.org/dist/Net-SSH2/
-Source0:        http://search.cpan.org/CPAN/authors/id/S/SA/SALVA/Net-SSH2-%{version}.tar.gz
+URL:            https://metacpan.org/release/Net-SSH2
+Source0:        https://cpan.metacpan.org/authors/id/S/SA/SALVA/Net-SSH2-%{version}.tar.gz
 # Build
 BuildRequires:  coreutils
 BuildRequires:  findutils
