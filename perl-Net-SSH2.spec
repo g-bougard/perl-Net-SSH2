@@ -3,7 +3,6 @@ Version:        0.69
 Release:        4%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
-Group:          Development/Libraries
 URL:            https://metacpan.org/release/Net-SSH2
 Source0:        https://cpan.metacpan.org/authors/id/S/SA/SALVA/Net-SSH2-%{version}.tar.gz
 # Build
