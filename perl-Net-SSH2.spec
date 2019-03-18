@@ -1,6 +1,6 @@
 Name:           perl-Net-SSH2
-Version:        0.69
-Release:        5%{?dist}
+Version:        0.70
+Release:        1%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Net-SSH2
@@ -68,12 +68,11 @@ rm -r inc
 sed -i -e '/^inc\// d' MANIFEST
 
 %build
-perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -delete
 find %{buildroot} -type f -name '*.bs' -size 0 -delete
 %{_fixperms} %{buildroot}/*
 
@@ -89,6 +88,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Mon Mar 18 2019 Jitka Plesnikova <jplesnik@redhat.com> - 0.70-1
+- 0.70 bump
+
 * Fri Feb 01 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.69-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
