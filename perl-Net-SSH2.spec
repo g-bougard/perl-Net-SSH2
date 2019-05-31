@@ -1,6 +1,6 @@
 Name:           perl-Net-SSH2
 Version:        0.70
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Net-SSH2
@@ -88,6 +88,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Fri May 31 2019 Jitka Plesnikova <jplesnik@redhat.com> - 0.70-2
+- Perl 5.30 rebuild
+
 * Mon Mar 18 2019 Jitka Plesnikova <jplesnik@redhat.com> - 0.70-1
 - 0.70 bump
 
