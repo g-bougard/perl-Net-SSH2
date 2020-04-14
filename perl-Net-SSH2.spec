@@ -1,10 +1,10 @@
 Name:           perl-Net-SSH2
-Version:        0.70
-Release:        4%{?dist}
+Version:        0.71
+Release:        1%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Net-SSH2
-Source0:        https://cpan.metacpan.org/authors/id/S/SA/SALVA/Net-SSH2-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/R/RK/RKITOVER/Net-SSH2-%{version}.tar.gz
 # Build
 BuildRequires:  coreutils
 BuildRequires:  findutils
@@ -68,11 +68,11 @@ rm -r inc
 sed -i -e '/^inc\// d' MANIFEST
 
 %build
-perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
-make %{?_smp_mflags}
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1 NO_PERLLOCAL=1
+%{make_build}
 
 %install
-make pure_install DESTDIR=%{buildroot}
+%{make_install}
 find %{buildroot} -type f -name '*.bs' -size 0 -delete
 %{_fixperms} %{buildroot}/*
 
@@ -82,12 +82,15 @@ find %{buildroot} -type f -name '*.bs' -size 0 -delete
 make test
 
 %files
-%doc Changes README example
+%doc Changes README.pod example
 %{perl_vendorarch}/auto/*
 %{perl_vendorarch}/Net*
 %{_mandir}/man3/*
 
 %changelog
+* Tue Apr 14 2020 Jitka Plesnikova <jplesnik@redhat.com> - 0.71-1
+- 0.71 bump
+
 * Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.70-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
