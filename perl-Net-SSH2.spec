@@ -1,10 +1,10 @@
 Name:           perl-Net-SSH2
-Version:        0.71
-Release:        3%{?dist}
+Version:        0.72
+Release:        1%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Net-SSH2
-Source0:        https://cpan.metacpan.org/authors/id/R/RK/RKITOVER/Net-SSH2-%{version}.tar.gz
+Source0:        https://cpan.metacpan.org/authors/id/S/SA/SALVA/Net-SSH2-%{version}.tar.gz
 # Build
 BuildRequires:  coreutils
 BuildRequires:  findutils
@@ -25,7 +25,6 @@ BuildRequires:  perl(Module::Install::Metadata)
 BuildRequires:  perl(Module::Install::WriteAll)
 BuildRequires:  perl(strict)
 BuildRequires:  perl(warnings)
-BuildRequires:  sed
 BuildRequires:  zlib-devel
 # Runtime
 BuildRequires:  perl(base)
@@ -65,7 +64,7 @@ all of the key exchanges, ciphers, and compression of libssh2.
 
 # Remove bundled libraries
 rm -r inc
-sed -i -e '/^inc\// d' MANIFEST
+perl -i -ne 'print $_ unless m{^inc/}' MANIFEST
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1 NO_PERLLOCAL=1
@@ -88,6 +87,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Mon Jan 04 2021 Jitka Plesnikova <jplesnik@redhat.com> - 0.72-1
+- 0.72 bump
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.71-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
