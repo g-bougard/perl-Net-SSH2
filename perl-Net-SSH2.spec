@@ -1,6 +1,6 @@
 Name:           perl-Net-SSH2
 Version:        0.72
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Support for the SSH 2 protocol via libSSH2
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Net-SSH2
@@ -87,6 +87,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Thu Jul 22 2021 Fedora Release Engineering <releng@fedoraproject.org> - 0.72-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
+
 * Fri May 21 2021 Jitka Plesnikova <jplesnik@redhat.com> - 0.72-3
 - Perl 5.34 rebuild
 
