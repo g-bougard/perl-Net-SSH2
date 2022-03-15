@@ -19,7 +19,6 @@ BuildRequires:  perl(Config)
 BuildRequires:  perl(Cwd)
 BuildRequires:  perl(File::Glob)
 BuildRequires:  perl(inc::Module::Install) >= 1.17
-BuildRequires:  perl(Module::Install::CheckLib)
 BuildRequires:  perl(Module::Install::Makefile)
 BuildRequires:  perl(Module::Install::Metadata)
 BuildRequires:  perl(Module::Install::WriteAll)
@@ -87,6 +86,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Tue Mar 15 2022 Guillaume Bougard <gbougard@teclib.com> - 0.72-5
+- Rebuilt for gbougard copr
+
 * Fri Jan 21 2022 Fedora Release Engineering <releng@fedoraproject.org> - 0.72-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
 
