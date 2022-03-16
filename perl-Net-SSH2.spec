@@ -22,11 +22,7 @@ BuildRequires:  perl-generators
 BuildRequires:  perl(Config)
 BuildRequires:  perl(Cwd)
 BuildRequires:  perl(File::Glob)
-%if 0%{?rhel} >= 8
-BuildRequires:  perl(inc::Module::Install) >= 1.17
-%else
-BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.76
-%endif
+BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(Module::Install::Makefile)
 BuildRequires:  perl(Module::Install::Metadata)
 BuildRequires:  perl(Module::Install::WriteAll)
