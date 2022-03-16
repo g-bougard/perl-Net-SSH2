@@ -66,7 +66,7 @@ rm -r inc
 perl -i -ne 'print $_ unless m{^inc/}' MANIFEST
 
 %build
-perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1 NO_PERLLOCAL=1
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1 NO_PERLLOCAL=1 lib=/usr/lib64 inc=/usr/include
 %{make_build}
 
 %install
